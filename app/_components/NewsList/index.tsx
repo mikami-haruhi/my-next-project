@@ -1,17 +1,10 @@
 import Image from "next/image";
 
 import styles from "./index.module.css";
+import Category from "../Category";
+import Date from "../Date";
+import type {News} from "@/app/_libs/microcms";
 
-type News ={
-    id: string;
-    title: string;
-    category: {
-        name: string;
-    };
-    publisheAt: string;
-    createdAt: string;
-
-};
 
 type Props ={
     news: News[];
@@ -26,7 +19,7 @@ export default function NewsList({news}: Props) {
         <ul>
             {news.map((article) => (
                 <li key={article.id} className={styles.list}>
-                    <div className={styles.image}>
+                    <div className={styles.link}>
                         <Image
                         className={styles.image}
                         src="/no-image.png"
@@ -35,26 +28,16 @@ export default function NewsList({news}: Props) {
                         height={630}
                         />
                         <dl className={styles.content}>
-                            <dt className={styles.title}>
-                                {article.title}
-                            </dt>
+                            <dt className={styles.title}>{article.title}</dt>
                             <dd className={styles.meta}>
-                                <span className={styles.tag}>{article.category.name}
-                                </span>
-                                <span className={styles.date}>
-                                    <Image
-                                    src="/clock.svg"
-                                    alt=""
-                                    width={16}
-                                    height={16}
-                                    priority
-                                    />
-                                </span>
+                                <Category category={article.category} />
+                                <Date date={article.publishedAt ??
+                                article.createAt
+                                } />
                             </dd>
                         </dl>
                     </div>
                 </li>
-
             ))}
         </ul>
     );
