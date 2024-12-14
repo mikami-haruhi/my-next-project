@@ -76,7 +76,7 @@ export const getCategoryDetail =async (
     contentId,
     queries,
   });
-  return detailData
+  return detailData;
 };
 
 
